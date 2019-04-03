@@ -1,4 +1,4 @@
-model ej1.mod;
+model models/ej1.mod;
 data data/red40.dat;
 option solver cplex;
 option cplex_options 'mipdisplay=5';
