@@ -1,0 +1,86 @@
+model TSP_MTZ-inv-t.mod;
+data datos.dat;
+option solver cplex;
+option cplex_options 'mipdisplay=5';
+solve;
+
+
+
+param color symbolic := "#BCED09";
+param forma symbolic := "ellipse";
+param archivo_grafico symbolic default "grafo.gml";
+
+printf "graph\n[\n\thierarchic 1\n\tdirected 1\n" > (archivo_grafico);
+
+for {nodo in nodos}
+{
+
+	
+	printf "	node\n\t[\
+		id	%d\
+		graphics\
+		[\
+			x	%f\
+			y	%f\
+			w	%f\
+			h	%f\
+			type	\x22%s\x22\
+			fill	\x22%s\x22\
+		]\
+		LabelGraphics\
+		[\
+			text	\x22%d\x22\
+			fontSize	%d\
+		]\
+	]\n\n",
+		nodo, 
+		xcoord[nodo], 
+		ycoord[nodo],
+		50,
+		50,
+		forma,
+		color, 
+		nodo,
+		20 > (archivo_grafico);
+}
+
+
+for {(i,j) in arcos}
+{
+	if x[i,j] >= 0.9 then
+	{
+			printf "	edge\n\t[\
+		source	%d\
+		target	%d\
+		graphics\
+		[\
+			fill	\x22#000000\x22\
+			targetArrow	\x22standard\x22\
+		]\
+	]\n\n",
+			i, 
+			j > (archivo_grafico);
+	}
+}
+	
+for {i in nodos, j in nodos : i != j}
+{
+	if z[i,j] >= 0.9 then
+	{
+			printf "	edge\n\t[\
+		source	%d\
+		target	%d\
+		graphics\
+		[\
+			fill	\x22#000000\x22\
+			targetArrow	\x22standard\x22\
+		]\
+	]\n\n",
+			i, 
+			j > (archivo_grafico);
+	}
+}
+	
+
+close archivo_grafico;
+
