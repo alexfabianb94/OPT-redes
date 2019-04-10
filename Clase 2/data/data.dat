@@ -1,5 +1,5 @@
-param n := 20;
-param deposito := 1;
+param num_nodos := 20;
+param origen := 1;
 
 param c:=
 1	2	101.552942

@@ -8,7 +8,7 @@ solve;
 
 param color symbolic := "#BCED09";
 param forma symbolic := "ellipse";
-param archivo_grafico symbolic default "grafo.gml";
+param archivo_grafico symbolic default "tito.gml";
 
 printf "graph\n[\n\thierarchic 1\n\tdirected 1\n" > (archivo_grafico);
 
@@ -64,4 +64,6 @@ for {(i,j) in arcos}
 }
 	
 close archivo_grafico;
+
+printf "Hola tito <3" > tito.txt;
 

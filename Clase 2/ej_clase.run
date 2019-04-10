@@ -1,0 +1,15 @@
+reset;
+
+model models/ej-clase.mod;
+data data/data.dat;
+option solver cplex;
+option cplex_options 'mipdisplay=5';
+solve;
+
+# expand;
+for {(i,j) in A}{
+    if x[i,j] >= 0.5 then {
+        printf "\nx[%d,%d] = %d\n",i,j,x[i,j];
+    }
+}
+    
