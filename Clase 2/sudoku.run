@@ -1,0 +1,24 @@
+reset;
+
+model models/sudoku.mod;
+data data/sudoku.dat;
+option solver cplex;
+
+solve;
+
+for {i in 1..9}
+{
+	for {j in 1..9}
+	{
+		for {k in 1..9}
+		{
+			if x[i,j,k] >= 0.99 then printf "%d ",k;
+			if a[i,j,k] >= 0.99 then printf "%d ",k;
+		}
+		
+		if j mod 3 == 0 then printf " ";
+	}
+	
+	printf "\n";
+	if i mod 3 == 0 then printf "\n";
+}
