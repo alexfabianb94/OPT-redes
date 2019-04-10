@@ -1,5 +1,5 @@
-model TSP_MTZ-inv-t.mod;
-data datos.dat;
+model models/MTZ.mod;
+data data/datos.dat;
 option solver cplex;
 option cplex_options 'mipdisplay=5';
 solve;
