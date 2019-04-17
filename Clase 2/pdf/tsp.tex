@@ -1,4 +1,4 @@
-\documentclass[5p]{article}
+\documentclass{article}
 
 \usepackage{lmodern}
 \usepackage{amsfonts}
@@ -30,9 +30,9 @@ min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
 Sujeto a : \begin{align}
 & \sum_{i \in N} x_{ij} = 1 &\forall j \in N \\
 & \sum_{j \in N} x_{ij} = 1 &\forall i \in N \\
-& \sum_{j \in N \backslash \{0\}} y_{1j} = |N| - 	1 \\
-& \sum_{i \in N \backslash \{0\}} y_{ik} - \sum_{j \in N \backslash \{0\}} y_{kj} = 1&\forall k \in N \backslash \{0\} \\
-& y_{ij} \leq (|N| - 1) x_{ij} & \forall (i,j) \in A\\
+& \sum_{j \in N \backslash \{0\}} y_{1j} = |N| - 1 \\
+& \sum_{i \in N} y_{ik} - \sum_{j \in N} y_{kj} = 1&\forall k \in N \backslash \{0\} \\
+& y_{ij} \leq (|N| - 1) \cdot  x_{ij} & \forall (i,j) \in A\\
 & x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
 & y_{ij} \geq 0 &\forall (i,j) \in A
 \end{align}
