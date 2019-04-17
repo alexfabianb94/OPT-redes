@@ -1,0 +1,28 @@
+reset;
+model models/modelo.mod;
+data data/datos.dat;
+
+# option solver cplex;
+option solver gurobi;
+# option solver xpress;
+
+# option cplex_options 'mipdisplay 2 threads 1 presolve 0 mipcuts -1 heurfreq -1 mipsearch 1';
+# option gurobi_options 'outlev 1 threads 1 presolve 0 cuts 0 heurfrac 0 ';
+# option xpress_options 'outlev 1 threads 1 presolve 0 cutstrategy 0 heurstrategy 0';
+
+# option cplex_options 'mipdisplay 2';
+option gurobi_options 'outlev 1';
+# option xpress_options 'outlev 1';
+
+#expand;
+solve;
+
+display X;
+display Y;
+display NC;
+display NS;
+display NP;
+display NB;
+display V;
+display F;
+
