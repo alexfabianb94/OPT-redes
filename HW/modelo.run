@@ -1,0 +1,88 @@
+reset;
+
+model models/model-RMC.mod;
+data data/red40.dat;
+
+param archivo symbolic default "matrix.dat";
+param grafo symbolic;
+param color symbolic := "#BCED09";
+param forma symbolic := "ellipse";
+
+option solver cplex;
+# option solver gurobi;
+# option solver xpress;
+
+# option cplex_options 'mipdisplay 2 threads 1 presolve 0 mipcuts -1 heurfreq -1 mipsearch 1';
+# option gurobi_options 'outlev 1 threads 1 presolve 0 cuts 0 heurfrac 0 ';
+# option xpress_options 'outlev 1 threads 1 presolve 0 cutstrategy 0 heurstrategy 0';
+
+option cplex_options 'mipdisplay 2';
+# option gurobi_options 'outlev 1';
+# option xpress_options 'outlev 1';
+
+for {origen in N}{
+	for {destino in N: origen != destino}{
+		let d[origen] := 1;	
+		let d[destino] := -1;
+		let {i in N: i != origen and i != destino} d[i] := 0;
+		solve;
+		printf "%d\t%d\t%f\n",origen, destino, z > (archivo);
+		let grafo := "graphs/" & origen & "-" & destino & ".gml";
+		printf "graph\n[\n\thierarchic 1\n\tdirected 1\n" > (grafo);
+		for {nodo in N}
+		{
+
+			
+			printf "	node\n\t[\
+				id	%d\
+				graphics\
+				[\
+					x	%f\
+					y	%f\
+					w	%f\
+					h	%f\
+					type	\x22%s\x22\
+					fill	\x22%s\x22\
+				]\
+				LabelGraphics\
+				[\
+					text	\x22%d\x22\
+					fontSize	%d\
+				]\
+			]\n\n",
+				nodo, 
+				coord_x[nodo], 
+				coord_y[nodo],
+				50,
+				50,
+				forma,
+				color, 
+				nodo,
+				20 > (grafo);
+		}
+
+
+		for {(i,j) in A}
+		{
+			if x[i,j] >= 0.9 then
+			{
+					printf "	edge\n\t[\
+				source	%d\
+				target	%d\
+				graphics\
+				[\
+					fill	\x22#000000\x22\
+					targetArrow	\x22standard\x22\
+				]\
+			]\n\n",
+					i, 
+					j > (grafo);
+			}
+		}
+
+		
+	}
+}
+
+
+
