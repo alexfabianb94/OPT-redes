@@ -1,0 +1,66 @@
+\documentclass[final]{article}
+\usepackage[letterpaper,margin=3cm]{geometry}
+\usepackage{lmodern}
+\usepackage{amsmath, amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,activeacute]{babel}
+\usepackage{mathtools}
+
+\setlength{\parindent}{0pt}
+%\setlength{\parskip}{1em}
+%\renewcommand{\baselinestretch}{1.25}
+
+\numberwithin{equation}{subsection}
+\begin{document}
+\section{Modelo matemático}
+\subsection{Conjuntos}
+\begin{tabular}{l r l}
+$N$ &=& Conjunto de nodos. \\
+$A$ &=& Conjunto de arcos.\\
+\end{tabular}
+
+\subsection{Parámetros}
+\begin{tabular}{l r l}
+$d_{ij}$ &=& Distancia mínima entre la comuna $i$ y la comuna $j$\\
+$f_{j}$ &=& Costo de localizar una compañía del tipo alturas en la comuna $j$\\
+$g_{j}$ &=& Costo de localizar una compañía del tipo directo en la comuna $j$\\
+$S$ &=& Distancia máxima entre una comuna y una compañía\\
+\end{tabular}
+\subsection{Variables}
+\[w_{ij}={\begin{cases}
+			1&{\mbox{si la comuna $i$ se asigna a la compañía del tipo alturas en la comuna $j$}}\\
+			0&{\mbox{en caso contrario}}\end{cases}}\]
+\[x_{ij}={\begin{cases}
+			1&{\mbox{si la comuna $i$ se asigna a la compañía del tipo directo en la comuna $j$}}\\
+			0&{\mbox{en caso contrario}}\end{cases}}\]
+\[y_{j}={\begin{cases}
+			1&{\mbox{si se localiza una compañía del tipo alturas en la comuna $j$}}\\
+			0&{\mbox{en caso contrario}}\end{cases}}\]
+\[z_{j}={\begin{cases}
+			1&{\mbox{si se localiza una compañía del tipo directo en la comuna $j$}}\\
+			0&{\mbox{en caso contrario}}\end{cases}}\]
+\newpage
+\subsection{Función Objetivo}
+\begin{equation}
+\label{Fo}
+\begin{split}
+Min\,Z =	\sum_{j \in N} y_{j} + \sum_{j \in N} z_{j}
+\end{split}
+\end{equation}
+Sujeto a : 
+\begin{align}
+& \sum_{(i,j) \in A} w_{ij} \cdot d_{ij} \leq S & \forall (i,j) \in A \\
+& \sum_{(i,j) \in A} x_{ij} \cdot d_{ij} \leq S & \forall (i,j) \in A \\
+& \sum_{(i,j) \in A} w_{ij} = 1 & \forall i \in N \\
+& \sum_{(i,j) \in A} z_{ij} = 1 & \forall i \in N \\
+& w_{ij} \leq  y_{j} & \forall (i,j) \in A \\
+& x_{ij} \leq  z_{j} & \forall (i,j) \in A \\
+& \sum_{j \in N} y_{j} = \sum_{j \in N} z_{j}\\
+& w_{ij}, x_{ij}, y_{j}, z_{j} \in \{0,1\}
+\end{align}
+\end{document}
+
+
+
+

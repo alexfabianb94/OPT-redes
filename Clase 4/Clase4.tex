@@ -1,0 +1,37 @@
+\documentclass[letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage[lmargin=3cm,rmargin=3cm,top=3cm,bottom=3cm]{geometry}
+\usepackage{amsmath,amsfonts}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{caption}
+
+
+\lhead{Universidad del Bío-Bío\\ Facultad de ingeniería \\ Escuela de Ingeniería Industrial}
+\rhead{\begin{picture}(0,0) \put(-75,0){\includegraphics[height=15mm]{logos/escudo_ubb_2}} \end{picture}}
+
+\pagestyle{fancy}
+
+
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries\centering}
+\titleformat*{\subsection}{\normalsize\bfseries}
+
+\begin{document}
+\vspace*{0.1\baselineskip}
+\section*{Práctica 4}
+\subsection*{Problema 1}
+Dado un grafo $G=(N,A)$ con $N$ el conjunto de nodos clientes y $A$ el conjunto de arcos, $c_{ij}$ el costo y $d_{ij}$ la distancia del arco $(i,j)$. El problema consiste en localizar un path que comienza en un nodo origen $s$ y termina en un nodo destino $t$. Ambos nodos extremos del path son dados a priori, con $s,t \in N$. Todos los clientes que no están en el path deben ser asignados al nodo más cercano que se encuentre en el mismo path. Se quiere minimizar el costo del path y la distancia total que recorre cada uno de los clientes para alcanzar el nodo sobre el path que le es asignado.
+\begin{itemize}
+\item Construya una pequeña red para mostrar una solución factible del problema, esto es, indicar los nodos extremos, el path y mediante arcos la asignación de los clientes al path
+\item Establezca los supuestos que estime conveniente, describa los parámetros y defina las variables de decisión
+\item Formule un modelo de programación lineal entera que permita resolver este problema
+\end{itemize}
+
+\subsection*{Problema 2}
+El Gobernador debe decidir la localización de compañías de bomberos dentro de la región. Dicha región se ha dividido en $N$ comunas y la distancia mínima entre la comuna $i$ y la comuna $j$ está dada por $d_{ij}$. Las compañías a localizar se clasifican en dos tipos, de acuerdo a la tecnología que tendrán para combatir los incendios: alturas y directo. Para cada nodo $j$, el costo de localizar una compañía del tipo alturas es $f_{i}$ y el costo de localizar una compañía del tipo directo es $g_{j}$. Por condiciones de seguridad en una comuna sólo se puede localizar un tipo de compañía. Se pide, formular un modelo de programación lineal entera que minimice el número de compañías de bomberos a localizar, de ambos tipos, de manera que cada comuna tenga al menos un tipo de compañía dentro de una distancia S. El presupuesto de la región obliga a localizar la misma cantidad de compañías de ambos tipos. 
+
+\end{document}
