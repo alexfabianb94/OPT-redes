@@ -38,8 +38,61 @@ Sujeto a : \begin{align}
 & x_{ij} \in \{0,1\} &\forall (i,j) \in A
 \end{align}
 
+\newpage
+\part{Árbol de rutas más cortas}
+\section{Formulación de flujo entero}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$r$ = Nodo de origen del árbol
+\subsection{Variables}
+\begin{center}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el árbol de expansión}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+$f_{ij}$ = flujo que pasa por el arco $(i,j)$
+\end{center}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot f_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(r,j) \in A} f_{rj} = |N| - 1\\
+& \sum_{(i,j) \in A} f_{ij} = 1 + \sum_{(j,h) \in A} f_{jh} &\forall j \in N \backslash \{r\} \\
+& f_{ij} \leq (|N| - 1)\cdot x_{ij} &\forall (i,j) \in A\\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \backslash \{r\}\\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
+& f_{j} \geq 0 &\forall (i,j) \in A
+\end{align}
 
-
+\newpage
+\section{Formulación de flujo multicommodity}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$r$ = Nodo de origen del árbol
+\subsection{Variables}
+\begin{center}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el árbol de expansión}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+$f_{ij}^k$ = flujo que pasa por el arco $(i,j)$ con dirección al nodo $k$
+\end{center}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot f_{ij}^k
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(r,j) \in A} f_{rj}^k = 1 &\forall k \in N \backslash \{r\}\\
+& \sum_{(i,k) \in A} f_{ik}^k = 1 &\forall k \in N \backslash \{r\}\\
+& \sum_{(i,j) \in A} f_{ij}^k = \sum_{(j,h) \in A} f_{jh}^k &\forall j,k \in N \backslash \{r\} : j \neq k \\
+& f_{ij}^k \leq x_{ij} &\forall (i,j) \in A, k \in N \backslash \{r\}\\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \backslash \{r\}\\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
+& f_{ij}^k \geq 0 &\forall (i,j) \in A, k \in N \backslash \{r\}
+\end{align}
 
 \newpage
 \part{El problema del minimum spanning tree MST}
@@ -200,6 +253,63 @@ Sujeto a : \begin{align}
 & y_{ij} \in \{0,1\} &\forall (i,j) \in A
 \end{align}
 
+\newpage
+\section{Formulación de flujo entero}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos\\
+$\bar{A}$ = $A \cup \{(0,j):j \in N\} $
+\subsection{Parámetros}
+$d_{ij}$ = Distancia entre el nodo de demanda $i$ y el servidor candidato $j$\\
+$p$ = Cantidad de servidores a localizar
+\subsection{Variables}
+\begin{center}
+\[y_{ij}={\begin{cases}1&{\mbox{si se asigna el nodo $i$ al servidor $j$}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+$f_{ij}$ = flujo que pasa por el arco $(i,j)$
+\end{center}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} f_{ij} \cdot d_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(0,j) \in \bar{A}} y_{0j} = p \\
+& \sum_{(0,j) \in \bar{A}} f_{0j} = |N|\\
+& \sum_{(i,j) \in \bar{A}} f_{ij} = 1 + \sum_{(j,h) \in A} f_{jh} &\forall j \in N \\
+& f_{ij} \leq |N| \cdot x_{ij} &\forall (i,j) \in A\\
+& \sum_{(i,j) \in \bar{A}} y_{ij} = 1 &\forall j \in N \\
+& y_{ij} \in \{0,1\} &\forall (i,j) \in \bar{A}\\
+& f_{ij} \geq 0 &\forall (i,j) \in \bar{A}
+\end{align}
+
+\newpage
+\section{Formulación de flujo multicommodity}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$d_{ij}$ = Distancia entre el nodo de demanda $i$ y el servidor candidato $j$\\
+$p$ = Cantidad de servidores a localizar
+\subsection{Variables}
+\begin{center}
+\[x_{j}={\begin{cases}1&{\mbox{si se localiza un servidor en $j$}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[y_{ij}={\begin{cases}1&{\mbox{si se asigna el nodo $i$ al servidor $j$}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\end{center}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} y_{ij} \cdot d_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{j \in N} x_{j} = p \\
+& \sum_{j \in N} y_{ij} = 1 &\forall i \in N \\
+& y_{ij} - x_{j} \leq 0 &\forall (i,j) \in A \\
+& x_{j} \in \{0,1\} &\forall j \in N\\
+& y_{ij} \in \{0,1\} &\forall (i,j) \in A
+\end{align}
+
+\newpage
 \part{El problema de la p-centro}
 \section{Formulación clásica}
 \subsection{Conjuntos}
