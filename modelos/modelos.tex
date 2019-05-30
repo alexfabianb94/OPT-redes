@@ -1,0 +1,270 @@
+\documentclass{article}
+
+\usepackage{lmodern}
+\usepackage{amsfonts}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,activeacute]{babel}
+\usepackage{mathtools}
+
+\usepackage{amsmath}
+\numberwithin{equation}{section}
+
+\title{El problema del vendedor viajero}
+\setlength{\parindent}{0pt}
+\begin{document}
+\part{Ruta más corta}
+\section{Formulación de transbordo}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$o$ = Nodo de origen\\
+$d$ = Nodo destino
+\subsection{Variables}
+\begin{flushleft}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el path}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{j \in N} x_{oj} = 1 \\
+& \sum_{i \in N} x_{id} = 1 \\
+& \sum_{i \in N} x_{ij} = \sum_{k \in N} y_{jk} &\forall j \in N \backslash \{o,d\} \\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A
+\end{align}
+
+
+
+
+\newpage
+\part{El problema del minimum spanning tree MST}
+\section{Formulación de clásica}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$
+\subsection{Variables}
+\begin{flushleft}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el árbol de expansión}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
+& \sum_{(i,j) \in A: i,j \in S} x_{ij} \leq |S| - 1 &\forall S \subseteq N : |S| \geq 2 \\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A
+\end{align}
+
+\section{Formulación de clásica II}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$
+$r$ = Nodo de origen del árbol
+\subsection{Variables}
+\begin{flushleft}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el árbol de expansión}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N: j \neq r\\
+& \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
+& \sum_{(i,j) \in A: i,j \in S} x_{ij} \leq |S| - 1 &\forall S \subseteq N : |S| \geq 2 \\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A
+\end{align}
+
+
+
+
+
+
+\newpage
+\part{El problema de la p-mediana}
+\section{Formulación clásica}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$d_{ij}$ = Distancia entre el nodo de demanda $i$ y el servidor candidato $j$\\
+$p$ = Cantidad de servidores a localizar
+\subsection{Variables}
+\begin{center}
+\[x_{j}={\begin{cases}1&{\mbox{si se localiza un servidor en $j$}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[y_{ij}={\begin{cases}1&{\mbox{si se asigna el nodo $i$ al servidor $j$}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\end{center}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} y_{ij} \cdot d_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{j \in N} x_{j} = p \\
+& \sum_{j \in N} y_{ij} = 1 &\forall i \in N \\
+& y_{ij} - x_{j} \leq 0 &\forall (i,j) \in A \\
+& x_{j} \in \{0,1\} &\forall j \in N\\
+& y_{ij} \in \{0,1\} &\forall (i,j) \in A
+\end{align}
+
+\part{El problema de la p-centro}
+\section{Formulación clásica}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$d_{ij}$ = Distancia entre el nodo de demanda $i$ y el servidor candidato $j$\\
+$p$ = Cantidad de servidores a localizar
+\subsection{Variables}
+\begin{center}
+\[x_{j}={\begin{cases}1&{\mbox{si se localiza un servidor en $j$}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[y_{ij}={\begin{cases}1&{\mbox{si se asigna el nodo $i$ al servidor $j$}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+$W$ = Distancia máxima entre un nodo de demanda y su servidor asignado
+\end{center}
+\subsection{Formulación matemática}
+\begin{equation}
+min \; W
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{j \in N} x_{j} = p \\
+& \sum_{j \in N} y_{ij} = 1 &\forall i \in N \\
+& y_{ij} - x_{j} \leq 0 &\forall (i,j) \in A \\
+& W - \sum_{j \in N} d_{ij} \cdot y_{ij} \geq 0 &\forall i \in N\\
+& x_{j} \in \{0,1\} &\forall j \in N\\
+& y_{ij} \in \{0,1\} &\forall (i,j) \in A\\
+& W \geq 0
+\end{align}
+
+
+
+\newpage
+\part{El problema del maximal covering}
+\section{Formulación clásica}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$d_{ij}$ = Distancia entre el nodo de demanda $i$ y el servidor candidato $j$\\
+$h_{i}$ = Demanda del nodo $i$\\
+$S$ = Radio de cobertura\\
+$p$ = Cantidad de servidores a localizar\\
+$C_{i}$ = $\{j \mid d_{ij} \leq S\}$
+\subsection{Variables}
+\begin{flushleft}
+\[x_{j}={\begin{cases}1&{\mbox{si se localiza el servidor en $j$}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[y_{i}={\begin{cases}1&{\mbox{si la demanda del nodo $i$ es cubierta}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+max \sum_{i \in N} y_{i} \cdot h_{i}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{j \in C_{i}} x_{j} - y_{i} \geq 0 &\forall i \in N \\
+& \sum_{j \in N} x_{j} = p\\
+& x_{j} \in \{0,1\} &\forall j \in N\\
+& y_{j} \in \{0,1\} &\forall j \in N
+\end{align}
+
+
+
+
+\newpage
+\part{El problema del set-covering}
+\section{Formulación clásica}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$d_{ij}$ = Distancia entre el nodo de demanda $i$ y el servidor candidato $j$\\
+$S$ = Radio de cobertura\\
+$C_{i}$ = $\{j \mid d_{ij} \leq S\}$
+\subsection{Variables}
+\begin{flushleft}
+\[x_{j}={\begin{cases}1&{\mbox{si se localiza el servidor en $j$}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{j \in N} x_{j}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{j \in C_{i}} x_{j} \geq 1 &\forall i \in N \\
+& x_{j} \in \{0,1\} &\forall j \in N
+\end{align}
+
+
+\newpage
+\part{El problema del vendedor viajero}
+\section{Formulación de Flujo Entero}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$
+\subsection{Variables}
+\begin{flushleft}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el tour}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[y_{ij} = \mbox{flujo enviado desde el nodo i, hacia el nodo j}\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{i \in N} x_{ij} = 1 &\forall j \in N \\
+& \sum_{j \in N} x_{ij} = 1 &\forall i \in N \\
+& \sum_{j \in N \backslash \{0\}} y_{1j} = |N| - 1 \\
+& \sum_{i \in N} y_{ik} - \sum_{j \in N} y_{kj} = 1&\forall k \in N \backslash \{0\} \\
+& y_{ij} \leq (|N| - 1) \cdot  x_{ij} & \forall (i,j) \in A\\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
+& y_{ij} \geq 0 &\forall (i,j) \in A
+\end{align}
+\section{Formulación MTZ}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$
+\subsection{Variables}
+\begin{flushleft}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el tour}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[t_{i} = \mbox{posicion en que se recorre el nodo i en el tour}\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{i \in N} x_{ij} = 1 &\forall j \in N \\
+& \sum_{j \in N} x_{ij} = 1 &\forall i \in N \\
+& \sum_{j \in N \backslash \{0\}} y_{1j} = |N| - 	1 \\
+& t_{j} \geq t_{i} + 1 - |N| \cdot (1 - x_{ij}) & \forall (i,j) \in A, i \neq 0, j \neq 0\\
+& t_{0} = 0\\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
+& t_{i} \in \mathbb{Z}^{+}_{0} &\forall i \in N
+\end{align}
+
+
+
+\end{document}
+
+
