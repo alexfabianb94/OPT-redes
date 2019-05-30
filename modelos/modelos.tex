@@ -34,7 +34,7 @@ min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
 Sujeto a : \begin{align}
 & \sum_{j \in N} x_{oj} = 1 \\
 & \sum_{i \in N} x_{id} = 1 \\
-& \sum_{i \in N} x_{ij} = \sum_{k \in N} y_{jk} &\forall j \in N \backslash \{o,d\} \\
+& \sum_{(i,j) \in A} x_{ij} = \sum_{(j,h) \in A} x_{jh} &\forall j \in N \backslash \{o,d\} \\
 & x_{ij} \in \{0,1\} &\forall (i,j) \in A
 \end{align}
 
@@ -64,12 +64,13 @@ Sujeto a : \begin{align}
 & x_{ij} \in \{0,1\} &\forall (i,j) \in A
 \end{align}
 
+\newpage
 \section{Formulación de clásica II}
 \subsection{Conjuntos}
 $N$ = Conjunto de nodos\\
 $A$ = Conjunto de arcos
 \subsection{Parámetros}
-$c_{ij}$ = costo asociado al arco $(i,j)$
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
 $r$ = Nodo de origen del árbol
 \subsection{Variables}
 \begin{flushleft}
@@ -81,16 +82,95 @@ $r$ = Nodo de origen del árbol
 min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
 \end{equation}
 Sujeto a : \begin{align}
-& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N: j \neq r\\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \backslash \{r\}\\
 & \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
 & \sum_{(i,j) \in A: i,j \in S} x_{ij} \leq |S| - 1 &\forall S \subseteq N : |S| \geq 2 \\
 & x_{ij} \in \{0,1\} &\forall (i,j) \in A
 \end{align}
 
+\newpage
+\section{Formulación de flujo entero}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$r$ = Nodo de origen del árbol
+\subsection{Variables}
+\begin{center}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el árbol de expansión}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+$f_{ij}$ = flujo que pasa por el arco $(i,j)$
+\end{center}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(r,j) \in A} f_{rj} = |N| - 1\\
+& \sum_{(i,j) \in A} f_{ij} = 1 + \sum_{(j,h) \in A} f_{jh} &\forall j \in N \backslash \{r\} \\
+& f_{ij} \leq (|N| - 1)\cdot x_{ij} &\forall (i,j) \in A\\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \backslash \{r\}\\
+& \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
+& \sum_{(i,j) \in A: i,j \in S} x_{ij} \leq |S| - 1 &\forall S \subseteq N : |S| \geq 2 \\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A
+\end{align}
 
+\newpage
+\section{Formulación de flujo multicommodity}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$r$ = Nodo de origen del árbol
+\subsection{Variables}
+\begin{center}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el árbol de expansión}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+$f_{ij}^k$ = flujo que pasa por el arco $(i,j)$ con dirección al nodo $k$
+\end{center}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(r,j) \in A} f_{rj}^k = 1 &\forall k \in N \backslash \{r\}\\
+& \sum_{(i,k) \in A} f_{ik}^k = 1 &\forall k \in N \backslash \{r\}\\
+& \sum_{(i,j) \in A} f_{ij}^k = \sum_{(j,h) \in A} f_{jh}^k &\forall j,k \in N \backslash \{r\} : j \neq k \\
+& f_{ij}^k \leq x_{ij} &\forall (i,j) \in A, k \in N \backslash \{r\}\\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \backslash \{r\}\\
+& \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
+& \sum_{(i,j) \in A: i,j \in S} x_{ij} \leq |S| - 1 &\forall S \subseteq N : |S| \geq 2 \\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A
+\end{align}
 
-
-
+\newpage
+\section{Formulación de Miller-Tucker-Zemblin (MTZ)}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$r$ = Nodo de origen del árbol
+\subsection{Variables}
+\begin{center}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el árbol de expansión}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+$t_{j}$ = número de arcos entre el nodo raíz y el nodo $j$
+\end{center}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \backslash \{r\}\\
+& \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
+& t_{j} \geq t_{i} + 1 - |N| \cdot (1 - x_{ij}) &\forall (i,j) \in A\\
+& t_{r} = 0\\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
+& t_{j} \geq 0 &\forall j \in N
+\end{align}
 
 \newpage
 \part{El problema de la p-mediana}
