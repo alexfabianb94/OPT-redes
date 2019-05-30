@@ -166,7 +166,7 @@ min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
 Sujeto a : \begin{align}
 & \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \backslash \{r\}\\
 & \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
-& t_{j} \geq t_{i} + 1 - |N| \cdot (1 - x_{ij}) &\forall (i,j) \in A\\
+& t_{j} \geq t_{i} + 1 - |N| \cdot (1 - x_{ij}) &\forall (i,j) \in A, j \neq r\\
 & t_{r} = 0\\
 & x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
 & t_{j} \geq 0 &\forall j \in N
@@ -298,31 +298,35 @@ $N$ = Conjunto de nodos\\
 $A$ = Conjunto de arcos
 \subsection{Parámetros}
 $c_{ij}$ = costo asociado al arco $(i,j)$
+$d$ = nodo de origen
 \subsection{Variables}
 \begin{flushleft}
 \[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el tour}}\\0&{\mbox{en caso contrario}}\end{cases}}
 \]
-\[y_{ij} = \mbox{flujo enviado desde el nodo i, hacia el nodo j}\]
+\[f_{ij} = \mbox{flujo enviado desde el nodo i, hacia el nodo j}\]
 \end{flushleft}
 \subsection{Formulación matemática}
 \begin{equation}
 min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
 \end{equation}
 Sujeto a : \begin{align}
-& \sum_{i \in N} x_{ij} = 1 &\forall j \in N \\
-& \sum_{j \in N} x_{ij} = 1 &\forall i \in N \\
-& \sum_{j \in N \backslash \{0\}} y_{1j} = |N| - 1 \\
-& \sum_{i \in N} y_{ik} - \sum_{j \in N} y_{kj} = 1&\forall k \in N \backslash \{0\} \\
-& y_{ij} \leq (|N| - 1) \cdot  x_{ij} & \forall (i,j) \in A\\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall i \in N \\
+& \sum_{(d,j) \in A} f_{dj} = |N| - 1 \\
+& \sum_{(i,j) \in A} f_{ij} - \sum_{(j,h) \in A} f_{jh} = 1 &\forall j \in N \backslash \{d\} \\
+& f_{ij} \leq (|N| - 1) \cdot  x_{ij} & \forall (i,j) \in A\\
 & x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
-& y_{ij} \geq 0 &\forall (i,j) \in A
+& f_{ij} \geq 0 &\forall (i,j) \in A
 \end{align}
+
+\newpage
 \section{Formulación MTZ}
 \subsection{Conjuntos}
 $N$ = Conjunto de nodos\\
 $A$ = Conjunto de arcos
 \subsection{Parámetros}
 $c_{ij}$ = costo asociado al arco $(i,j)$
+$d$ = nodo de origen
 \subsection{Variables}
 \begin{flushleft}
 \[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el tour}}\\0&{\mbox{en caso contrario}}\end{cases}}
@@ -334,11 +338,10 @@ $c_{ij}$ = costo asociado al arco $(i,j)$
 min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
 \end{equation}
 Sujeto a : \begin{align}
-& \sum_{i \in N} x_{ij} = 1 &\forall j \in N \\
-& \sum_{j \in N} x_{ij} = 1 &\forall i \in N \\
-& \sum_{j \in N \backslash \{0\}} y_{1j} = |N| - 	1 \\
-& t_{j} \geq t_{i} + 1 - |N| \cdot (1 - x_{ij}) & \forall (i,j) \in A, i \neq 0, j \neq 0\\
-& t_{0} = 0\\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall i \in N \\
+& t_{j} \geq t_{i} + 1 - |N| \cdot (1 - x_{ij}) & \forall (i,j) \in A, j \neq d\\
+& t_{d} = 0\\
 & x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
 & t_{i} \in \mathbb{Z}^{+}_{0} &\forall i \in N
 \end{align}
