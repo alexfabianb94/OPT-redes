@@ -65,5 +65,3 @@ for {(i,j) in arcos}
 	
 close archivo_grafico;
 
-printf "Hola tito <3" > tito.txt;
-
