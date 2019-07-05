@@ -1,5 +1,5 @@
 \documentclass{article}
-
+\usepackage[lmargin=2.5cm,rmargin=2.5cm,top=3cm,bottom=3cm]{geometry}
 \usepackage{lmodern}
 \usepackage{amsfonts}
 \usepackage[T1]{fontenc}
@@ -164,8 +164,8 @@ Sujeto a : \begin{align}
 & \sum_{(i,j) \in A} f_{ij} = 1 + \sum_{(j,h) \in A} f_{jh} &\forall j \in N \backslash \{r\} \\
 & f_{ij} \leq (|N| - 1)\cdot x_{ij} &\forall (i,j) \in A\\
 & \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \backslash \{r\}\\
-& \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
-& \sum_{(i,j) \in A: i,j \in S} x_{ij} \leq |S| - 1 &\forall S \subseteq N : |S| \geq 2 \\
+% & \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
+% & \sum_{(i,j) \in A: i,j \in S} x_{ij} \leq |S| - 1 &\forall S \subseteq N : |S| \geq 2 \\
 & x_{ij} \in \{0,1\} &\forall (i,j) \in A
 \end{align}
 
@@ -193,8 +193,8 @@ Sujeto a : \begin{align}
 & \sum_{(i,j) \in A} f_{ij}^k = \sum_{(j,h) \in A} f_{jh}^k &\forall j,k \in N \backslash \{r\} : j \neq k \\
 & f_{ij}^k \leq x_{ij} &\forall (i,j) \in A, k \in N \backslash \{r\}\\
 & \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \backslash \{r\}\\
-& \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
-& \sum_{(i,j) \in A: i,j \in S} x_{ij} \leq |S| - 1 &\forall S \subseteq N : |S| \geq 2 \\
+% & \sum_{(i,j) \in A} x_{ij} = |N| - 1\\
+% & \sum_{(i,j) \in A: i,j \in S} x_{ij} \leq |S| - 1 &\forall S \subseteq N : |S| \geq 2 \\
 & x_{ij} \in \{0,1\} &\forall (i,j) \in A
 \end{align}
 
@@ -435,12 +435,38 @@ Sujeto a : \begin{align}
 
 \newpage
 \part{El problema del vendedor viajero}
+\section{Formulación Clásica}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$d$ = nodo de origen
+\subsection{Variables}
+\begin{flushleft}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el tour}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[f_{ij} = \mbox{flujo enviado desde el nodo i, hacia el nodo j}\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N \\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall i \in N \\
+& \sum_{(i,j) \in A: i,j \in S} x_{ij} \leq |S| - 1 &\forall S \subset N : |S| \geq 2 \\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A
+\end{align}
+
+
+\newpage
 \section{Formulación de Flujo Entero}
 \subsection{Conjuntos}
 $N$ = Conjunto de nodos\\
 $A$ = Conjunto de arcos
 \subsection{Parámetros}
-$c_{ij}$ = costo asociado al arco $(i,j)$
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
 $d$ = nodo de origen
 \subsection{Variables}
 \begin{flushleft}
@@ -468,7 +494,7 @@ Sujeto a : \begin{align}
 $N$ = Conjunto de nodos\\
 $A$ = Conjunto de arcos
 \subsection{Parámetros}
-$c_{ij}$ = costo asociado al arco $(i,j)$
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
 $d$ = nodo de origen
 \subsection{Variables}
 \begin{flushleft}
@@ -489,6 +515,155 @@ Sujeto a : \begin{align}
 & t_{i} \in \mathbb{Z}^{+}_{0} &\forall i \in N
 \end{align}
 
+\newpage
+\part{El problema de ruteo de vehículos}
+\section{Formulación Clásica}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$d$ = nodo de origen
+\subsection{Variables}
+\begin{flushleft}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el tour}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[f_{ij} = \mbox{flujo enviado desde el nodo i, hacia el nodo j}\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(d,j) \in A} x_{dj} = m \\
+& \sum_{(i,d) \in A} x_{id} = m \\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N\backslash \{d\} \\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall i \in N\backslash \{d\} \\
+& \sum_{(i,j) \in \delta^{+}(S)} x_{ij} \geq \left\lceil \frac{\sum\limits_{j \in S} q_{j}}{Q} \right\rceil &\forall S \subset N : |S| \geq 2 \\
+& m \geq 0\\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A
+\end{align}
+
+
+\newpage
+\section{Formulación de Flujo Entero}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$d$ = nodo de origen
+\subsection{Variables}
+\begin{flushleft}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el tour}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[f_{ij} = \mbox{flujo enviado desde el nodo i, hacia el nodo j}\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(d,j) \in A} x_{dj} = m \\
+& \sum_{(i,d) \in A} x_{id} = m \\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N\backslash \{d\} \\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall i \in N\backslash \{d\} \\
+& \sum_{(d,j) \in A} f_{dj} = \sum_{j \in N} q_{j} \\
+& \sum_{(i,j) \in A} f_{ij} - \sum_{(j,h) \in A} f_{jh} = q_{j} &\forall j \in N \backslash \{d\} \\
+& f_{ij} \leq Q \cdot  x_{ij} & \forall (i,j) \in A\\
+& m \geq 0\\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
+& f_{ij} \geq 0 &\forall (i,j) \in A
+\end{align}
+
+\newpage
+\section{Formulación MTZ}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$d$ = nodo de origen
+\subsection{Variables}
+\begin{flushleft}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el tour}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[t_{i} = \mbox{posicion en que se recorre el nodo i en el tour}\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N\backslash \{d\} \\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall i \in N\backslash \{d\} \\
+& t_{d} = 0\\
+& t_{j} \geq t_{i} + q_{j} \cdot x_{ij} - Q \cdot (1 - x_{ij}) & \forall (i,j) \in A, j \neq d\\
+& t_{i} \leq Q & \forall i \in \in N\backslash \{d\}\\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
+& t_{i} \in \mathbb{R}^{+}_{0} &\forall i \in N
+\end{align}
+
+\newpage
+\section{Formulación de flujo multicommodity}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$d$ = nodo de origen
+\subsection{Variables}
+\begin{center}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el tour}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+$f_{ij}^k$ = flujo que pasa por el arco $(i,j)$ con dirección al nodo $k$
+\end{center}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{(d,j) \in A} x_{dj} = m \\
+& \sum_{(i,d) \in A} x_{id} = m \\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall j \in N\backslash \{d\} \\
+& \sum_{(i,j) \in A} x_{ij} = 1 &\forall i \in N\backslash \{d\} \\
+& \sum_{(d,j) \in A} f_{dj}^k = q_{k} &\forall k \in N\backslash \{d\} \\
+& \sum_{(i,k) \in A} f_{ik}^k = q_{k} &\forall k \in N\backslash \{d\} \\
+& \sum_{(i,j) \in A} f_{ij}^k = \sum_{(j,h) \in A} f_{jh}^k &\forall j,k \in N\backslash \{d\} : j \neq k \\
+& f_{ij}^k \leq q_{k} \cdot x_{ij} &\forall (i,j) \in A, k \in N\backslash \{d\}\\
+& \sum_{k \in N} f_{dj}^k \leq Q \cdot x_{dj} &\forall j \in N\backslash \{d\}\\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A\\
+& f_{ij}^k \geq 0 &\forall (i,j) \in A, k \in N
+\end{align}
+
+\newpage
+\part{El problema de Ruteo de Vehículos con Flota Heterogénea}
+\section{Formulación Clásica}
+\subsection{Conjuntos}
+$N$ = Conjunto de nodos\\
+$A$ = Conjunto de arcos
+\subsection{Parámetros}
+$c_{ij}$ = costo asociado al arco $(i,j)$\\
+$d$ = nodo de origen
+\subsection{Variables}
+\begin{flushleft}
+\[x_{ij}={\begin{cases}1&{\mbox{si el arco $(i,j)$ se encuentra en el tour}}\\0&{\mbox{en caso contrario}}\end{cases}}
+\]
+\[f_{ij} = \mbox{flujo enviado desde el nodo i, hacia el nodo j}\]
+\end{flushleft}
+\subsection{Formulación matemática}
+\begin{equation}
+min \sum_{(i,j) \in A} c_{ij} \cdot x_{ij}^{k}
+\end{equation}
+Sujeto a : \begin{align}
+& \sum_{k \in K} \sum_{(i,j) \in A} x_{ij}^{k} = 1 &\forall j \in N\backslash \{d\} \\
+& \sum_{k \in K} \sum_{(i,j) \in A} x_{ij}^{k} = 1 &\forall i \in N\backslash \{d\} \\
+& \sum_{(i,j) \in A} x_{ij}^{k} = \sum_{(j,h) \in A} x_{jh}^{k} &\forall k \in K, j \in N \backslash \{d\} \\
+& \sum_{(i,j) \in \delta^{+}(S)} x_{ij}^{k} \geq \left\lceil \frac{\sum\limits_{j \in S} q_{j}}{Q} \right\rceil &\forall k \in K, S \subset N : |S| \geq 2 \\
+& \sum{(i,j) \in A} x_{ij}^{k} \leq Q_{k} & \forall k \in K\\
+%& m \geq 0\\
+& x_{ij} \in \{0,1\} &\forall (i,j) \in A
+\end{align}
 
 
 \end{document}
